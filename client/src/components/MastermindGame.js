@@ -15,8 +15,6 @@ const MasterMindGame = () => {
 
   useEffect(() => {
     // //1. retrieve random numbers from api
-    console.log("use effect");
-
     fetch(
       "https://www.random.org/integers/?num=" +
         difficulty +
@@ -26,50 +24,23 @@ const MasterMindGame = () => {
         return res.text();
       })
       .then((data) => {
-        console.log(data);
-        console.log("\n");
         var array = data.split("\n");
         array.pop();
         array = array.map((num) => {
           return parseInt(num);
         });
         setRandomNums(array);
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [difficulty]);
 
-  const isValidInput = (inputs) => {
-
-    console.dir("inputs (event.target): " + inputs);
-    console.log("input length: " + inputs.length)
-
-    for (let i = 0; i < inputs.length; i++) {
-      var currInput = inputs[i].value;
-      console.log("inputVal" + currInput);
-      
-      if (isNaN(Number(currInput))) {
-        return false;
-      }
-    
-      let num = parseInt(currInput);
-      if (num < 0 || num > 7) {
-        return false;
-      }
-      console.log("made it past second check");
-    }
-
-    return true;
-  };
-
   const isValid = (arr) => {
-    console.dir("inputs (event.target): " + arr);
-    console.log("input length: " + arr.length)
     for (let i = 0; i < arr.length; i++) {
        
         var currInput = arr[i];
-        console.log("inputVal" + currInput);
         
         if (isNaN(Number(currInput))) {
           return false;
@@ -82,13 +53,11 @@ const MasterMindGame = () => {
         if (num < 0 || num > 7) {
           return false;
         }
-        console.log("made it past second check");
       }
       return true;
   }
 
   const checkRow = (event) => {
-      console.dir(event.target);
     if (turnsLeft < 1) {
       alert("Game Over. Better Luck next time");
     } else {
@@ -97,16 +66,13 @@ const MasterMindGame = () => {
       if (!didGameStart) {
           setDidGameStart(true);
       }
-      console.log("nan check: " + isNaN(event.target[0].value));
+
       //check all inputs are valid
       var arr = [];
       for (var i = 0; i < event.target.length - 1; i++ ) {
           arr.push(event.target[i].value)
       }
-    //   if (isValidInput(event.target) == false) {
-    //       console.log("isn't valid input");
-    //     return;
-    //   }
+ 
     if (!isValid(arr)) {
         return false;
     }
@@ -141,9 +107,6 @@ const MasterMindGame = () => {
         }
       }
 
-      for (let i = 0; i < randomArr.length; i++) {
-        console.log(typeof randomArr[i]);
-      }
       //2. check if any remaining inputs nums are in the random set
       inputArr.forEach((num) => {
         if (randomArr.indexOf(num) != -1) {

@@ -15,7 +15,6 @@ const DisplayRow = (props) => {
     }
   });
 
-  console.log("colors" + colors);
   return (
     <div className={classes.block}>
       <div className={classes.displayRow}>
