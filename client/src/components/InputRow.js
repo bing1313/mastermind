@@ -1,8 +1,10 @@
 import ValueBoxes from "./ValueBoxes";
 import classes from "./InputRow.module.css";
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
 
 const InputRow = (props) => {
+    
     return (
         <div className={classes.row}>
             <form onSubmit={props.checkRow} id="form1"> 
