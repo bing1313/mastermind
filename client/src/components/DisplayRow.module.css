@@ -1,0 +1,26 @@
+.dots {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-style: solid;
+    border-width: thin;
+    margin-left: 10px;
+    
+}
+
+.red {
+    background-color: rgb(16, 128, 6);
+}
+
+.grey {
+    background-color: rgb(117, 117, 117);
+}
+
+.displayRow {
+    display: inline-block;
+}
+
+.block {
+    display: block;
+}

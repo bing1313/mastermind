@@ -1,0 +1,15 @@
+.guessGrid {
+    text-align: center;
+}
+
+.game {
+    text-align: center;
+    margin: auto;
+    top: 50%;
+}   
+
+h2 {
+    text-align: center;
+    padding: 50px;
+    margin: 30px;
+}

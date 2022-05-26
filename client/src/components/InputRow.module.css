@@ -1,0 +1,15 @@
+.row {
+    position: absolute;
+    bottom: 20%;
+    left: 30%;
+    margin: auto;  
+}
+
+.btn {
+    margin: 30px;
+    display: inline-block;
+}
+
+.checkRow {
+    display: inline-block;
+}
