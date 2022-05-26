@@ -1,12 +1,9 @@
 .row {
-    position: absolute;
-    bottom: 20%;
-    left: 30%;
-    margin: auto;  
+    padding-top: 200px;
 }
 
 .btn {
-    margin: 30px;
+    margin-top: 30px;
     display: inline-block;
 }
 

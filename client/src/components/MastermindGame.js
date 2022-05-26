@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import classes from "./MastermindGame.module.css";
 import InputRow from "./InputRow";
 import DisplayRow from "./DisplayRow";
+import GameModes from "./GameModes";
 
 const MasterMindGame = () => {
   const [randomNums, setRandomNums] = useState([2, 3, 1, 4]);
@@ -10,19 +11,23 @@ const MasterMindGame = () => {
   const [didWin, setDidWin] = useState(false);
   const [turnsLeft, setTurnsLeft] = useState(10);
   const [difficulty, setDiff] = useState(4);
+  const [didGameStart, setDidGameStart] = useState(false);
 
   useEffect(() => {
     // //1. retrieve random numbers from api
     console.log("use effect");
-    
+
     fetch(
-      "https://www.random.org/integers/?num="+ difficulty +"4&min=0&max=7&col=1&base=10&format=plain&rnd=new"
+      "https://www.random.org/integers/?num=" +
+        difficulty +
+        "&min=0&max=7&col=1&base=10&format=plain&rnd=new"
     )
       .then((res) => {
         return res.text();
       })
       .then((data) => {
         console.log(data);
+        console.log("\n");
         var array = data.split("\n");
         array.pop();
         array = array.map((num) => {
@@ -36,31 +41,75 @@ const MasterMindGame = () => {
   }, [difficulty]);
 
   const isValidInput = (inputs) => {
-    console.log("inputs" + inputs);
+
+    console.dir("inputs (event.target): " + inputs);
+    console.log("input length: " + inputs.length)
+
     for (let i = 0; i < inputs.length; i++) {
       var currInput = inputs[i].value;
       console.log("inputVal" + currInput);
-      if (isNaN(currInput) || isNaN(Number(currInput))) {
-        console.log("isnan or not a num");
+      
+      if (isNaN(Number(currInput))) {
         return false;
       }
+    
       let num = parseInt(currInput);
       if (num < 0 || num > 7) {
         return false;
       }
+      console.log("made it past second check");
     }
+
     return true;
   };
 
+  const isValid = (arr) => {
+    console.dir("inputs (event.target): " + arr);
+    console.log("input length: " + arr.length)
+    for (let i = 0; i < arr.length; i++) {
+       
+        var currInput = arr[i];
+        console.log("inputVal" + currInput);
+        
+        if (isNaN(Number(currInput))) {
+          return false;
+        }
+
+        if (currInput.length == 0) {
+            return false;
+        }
+        let num = parseInt(currInput);
+        if (num < 0 || num > 7) {
+          return false;
+        }
+        console.log("made it past second check");
+      }
+      return true;
+  }
+
   const checkRow = (event) => {
+      console.dir(event.target);
     if (turnsLeft < 1) {
       alert("Game Over. Better Luck next time");
     } else {
       event.preventDefault();
-      //check all inputs are valid
-      if (!isValidInput(event.target)) {
-        return;
+      //update did game start
+      if (!didGameStart) {
+          setDidGameStart(true);
       }
+      console.log("nan check: " + isNaN(event.target[0].value));
+      //check all inputs are valid
+      var arr = [];
+      for (var i = 0; i < event.target.length - 1; i++ ) {
+          arr.push(event.target[i].value)
+      }
+    //   if (isValidInput(event.target) == false) {
+    //       console.log("isn't valid input");
+    //     return;
+    //   }
+    if (!isValid(arr)) {
+        return false;
+    }
 
       setTurnsLeft(turnsLeft - 1);
       var rowArray = [];
@@ -103,8 +152,8 @@ const MasterMindGame = () => {
         }
       });
 
-      console.log("feedback after 2: " + feedback);
-      for (let i = feedback.length; i < 4; i++) {
+      //3. check for any remaining numbers
+      for (let i = feedback.length; i < difficulty; i++) {
         feedback.push(0);
       }
       //check if input is correct
@@ -132,9 +181,22 @@ const MasterMindGame = () => {
     }
   };
 
+  const changeMode = (e) => {
+      if (!didGameStart) {
+        switch (e.target.value) {
+            case "hard":
+              setDiff(6);
+              break;
+            default:
+              setDiff(4);
+          }
+      }
+  };
+
   return (
     <section>
       <h2>MasterMind Game</h2>
+      <div className={classes.box}>
       <div className={classes.game}>
         {<p>{turnsLeft} turns remaining</p>}
         <div className={classes.guessGrid}>
@@ -144,13 +206,19 @@ const MasterMindGame = () => {
                 key={row.row}
                 values={row.nums}
                 feedback={row.check}
-                numInputs={randomNums.count}
+                numInputs={difficulty}
               />
             );
           })}
         </div>
+        
+        {!didGameStart && <GameModes changeMode={changeMode} />}
+
         <InputRow rowId="1" checkRow={checkRow} level={difficulty} />
+        <p>Inputs should be only numbers from 0-7</p>
       </div>
+      </div>
+      
     </section>
   );
 };

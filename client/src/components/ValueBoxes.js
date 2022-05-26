@@ -2,8 +2,9 @@ import classes from "./ValueBoxes.module.css";
 
 const ValueBoxes = (props) => {
   var isMutable = props.readOnly;
-  let arrNum = props.level
-  var values = props.values ? props.values : Array(4).fill("");
+  
+  //var values = props.values ? props.values : Array(props.level).fill("");
+  var values = props.values;
   return (
     <div className={classes.box}>
         {values.map((val) => {

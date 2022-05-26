@@ -3,13 +3,24 @@
 }
 
 .game {
-    text-align: center;
-    margin: auto;
+    right: 50px;
     top: 50%;
+    float: left;
 }   
 
 h2 {
-    text-align: center;
-    padding: 50px;
-    margin: 30px;
+    
+    padding-top: 50px;
+    padding-bottom: 10px;
+    margin-left: 100px;
+}
+
+p {
+    font-size: 20px;
+    color: red;
+    padding-top: 20px;
+}
+
+.box {
+    margin-left: 100px;
 }

@@ -22,10 +22,8 @@ const DisplayRow = (props) => {
         <ValueBoxes readOnly={true} values={props.values} />
       </div>
       {props.feedback.map((str, index) => {
-          return <span key={Math.random} className={`${classes.dots} ${classes[colors[index]]}`}></span>
+          return <span key={Math.random()} className={`${classes.dots} ${classes[colors[index]]}`}></span>
       })}
-
-     
 
     </div>
   );
